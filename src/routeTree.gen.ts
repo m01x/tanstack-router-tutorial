@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactUsRouteImport } from './routes/contact-us'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,6 +22,11 @@ import { Route as publicCategoriesCategoryIdRouteRouteImport } from './routes/(p
 import { Route as publicCategoriesCategoryIdSubcategoryIdRouteRouteImport } from './routes/(public)/categories/$categoryId/$subcategoryId/route'
 import { Route as publicCategoriesCategoryIdSubcategoryIdProductIdRouteRouteImport } from './routes/(public)/categories/$categoryId/$subcategoryId/$productId/route'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactUsRoute = ContactUsRouteImport.update({
   id: '/contact-us',
   path: '/contact-us',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/login': typeof LoginRoute
   '/categories': typeof publicCategoriesRouteRouteWithChildren
   '/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/login': typeof LoginRoute
   '/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
   '/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/login': typeof LoginRoute
   '/(public)/categories': typeof publicCategoriesRouteRouteWithChildren
   '/(public)/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact-us'
+    | '/login'
     | '/categories'
     | '/search'
     | '/contact-us/$country'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact-us'
+    | '/login'
     | '/search'
     | '/contact-us/$country'
     | '/categories/$categoryId'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact-us'
+    | '/login'
     | '/(public)/categories'
     | '/(public)/search'
     | '/contact-us/$country'
@@ -164,12 +176,20 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactUsRoute: typeof ContactUsRouteWithChildren
+  LoginRoute: typeof LoginRoute
   publicCategoriesRouteRoute: typeof publicCategoriesRouteRouteWithChildren
   publicSearchRouteRoute: typeof publicSearchRouteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact-us': {
       id: '/contact-us'
       path: '/contact-us'
@@ -323,6 +343,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactUsRoute: ContactUsRouteWithChildren,
+  LoginRoute: LoginRoute,
   publicCategoriesRouteRoute: publicCategoriesRouteRouteWithChildren,
   publicSearchRouteRoute: publicSearchRouteRoute,
 }
