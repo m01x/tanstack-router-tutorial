@@ -13,7 +13,13 @@ import { Route as ContactUsRouteImport } from './routes/contact-us'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactUsCountryRouteImport } from './routes/contact-us.$country'
+import { Route as publicSearchRouteRouteImport } from './routes/(public)/search/route'
+import { Route as publicCategoriesRouteRouteImport } from './routes/(public)/categories/route'
+import { Route as publicCategoriesIndexRouteImport } from './routes/(public)/categories/index'
 import { Route as ContactUsCountryCityRouteImport } from './routes/contact-us.$country.$city'
+import { Route as publicCategoriesCategoryIdRouteRouteImport } from './routes/(public)/categories/$categoryId/route'
+import { Route as publicCategoriesCategoryIdSubcategoryIdRouteRouteImport } from './routes/(public)/categories/$categoryId/$subcategoryId/route'
+import { Route as publicCategoriesCategoryIdSubcategoryIdProductIdRouteRouteImport } from './routes/(public)/categories/$categoryId/$subcategoryId/$productId/route'
 
 const ContactUsRoute = ContactUsRouteImport.update({
   id: '/contact-us',
@@ -35,33 +41,83 @@ const ContactUsCountryRoute = ContactUsCountryRouteImport.update({
   path: '/$country',
   getParentRoute: () => ContactUsRoute,
 } as any)
+const publicSearchRouteRoute = publicSearchRouteRouteImport.update({
+  id: '/(public)/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicCategoriesRouteRoute = publicCategoriesRouteRouteImport.update({
+  id: '/(public)/categories',
+  path: '/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicCategoriesIndexRoute = publicCategoriesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => publicCategoriesRouteRoute,
+} as any)
 const ContactUsCountryCityRoute = ContactUsCountryCityRouteImport.update({
   id: '/$city',
   path: '/$city',
   getParentRoute: () => ContactUsCountryRoute,
 } as any)
+const publicCategoriesCategoryIdRouteRoute =
+  publicCategoriesCategoryIdRouteRouteImport.update({
+    id: '/$categoryId',
+    path: '/$categoryId',
+    getParentRoute: () => publicCategoriesRouteRoute,
+  } as any)
+const publicCategoriesCategoryIdSubcategoryIdRouteRoute =
+  publicCategoriesCategoryIdSubcategoryIdRouteRouteImport.update({
+    id: '/$subcategoryId',
+    path: '/$subcategoryId',
+    getParentRoute: () => publicCategoriesCategoryIdRouteRoute,
+  } as any)
+const publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute =
+  publicCategoriesCategoryIdSubcategoryIdProductIdRouteRouteImport.update({
+    id: '/$productId',
+    path: '/$productId',
+    getParentRoute: () => publicCategoriesCategoryIdSubcategoryIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/categories': typeof publicCategoriesRouteRouteWithChildren
+  '/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
+  '/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
+  '/categories/': typeof publicCategoriesIndexRoute
+  '/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
+  '/categories/$categoryId/$subcategoryId/$productId': typeof publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
+  '/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
+  '/categories': typeof publicCategoriesIndexRoute
+  '/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
+  '/categories/$categoryId/$subcategoryId/$productId': typeof publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
+  '/(public)/categories': typeof publicCategoriesRouteRouteWithChildren
+  '/(public)/search': typeof publicSearchRouteRoute
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
+  '/(public)/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
+  '/(public)/categories/': typeof publicCategoriesIndexRoute
+  '/(public)/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
+  '/(public)/categories/$categoryId/$subcategoryId/$productId': typeof publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -69,28 +125,47 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact-us'
+    | '/categories'
+    | '/search'
     | '/contact-us/$country'
+    | '/categories/$categoryId'
     | '/contact-us/$country/$city'
+    | '/categories/'
+    | '/categories/$categoryId/$subcategoryId'
+    | '/categories/$categoryId/$subcategoryId/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact-us'
+    | '/search'
     | '/contact-us/$country'
+    | '/categories/$categoryId'
     | '/contact-us/$country/$city'
+    | '/categories'
+    | '/categories/$categoryId/$subcategoryId'
+    | '/categories/$categoryId/$subcategoryId/$productId'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact-us'
+    | '/(public)/categories'
+    | '/(public)/search'
     | '/contact-us/$country'
+    | '/(public)/categories/$categoryId'
     | '/contact-us/$country/$city'
+    | '/(public)/categories/'
+    | '/(public)/categories/$categoryId/$subcategoryId'
+    | '/(public)/categories/$categoryId/$subcategoryId/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactUsRoute: typeof ContactUsRouteWithChildren
+  publicCategoriesRouteRoute: typeof publicCategoriesRouteRouteWithChildren
+  publicSearchRouteRoute: typeof publicSearchRouteRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -123,12 +198,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactUsCountryRouteImport
       parentRoute: typeof ContactUsRoute
     }
+    '/(public)/search': {
+      id: '/(public)/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof publicSearchRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/categories': {
+      id: '/(public)/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof publicCategoriesRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/categories/': {
+      id: '/(public)/categories/'
+      path: '/'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof publicCategoriesIndexRouteImport
+      parentRoute: typeof publicCategoriesRouteRoute
+    }
     '/contact-us/$country/$city': {
       id: '/contact-us/$country/$city'
       path: '/$city'
       fullPath: '/contact-us/$country/$city'
       preLoaderRoute: typeof ContactUsCountryCityRouteImport
       parentRoute: typeof ContactUsCountryRoute
+    }
+    '/(public)/categories/$categoryId': {
+      id: '/(public)/categories/$categoryId'
+      path: '/$categoryId'
+      fullPath: '/categories/$categoryId'
+      preLoaderRoute: typeof publicCategoriesCategoryIdRouteRouteImport
+      parentRoute: typeof publicCategoriesRouteRoute
+    }
+    '/(public)/categories/$categoryId/$subcategoryId': {
+      id: '/(public)/categories/$categoryId/$subcategoryId'
+      path: '/$subcategoryId'
+      fullPath: '/categories/$categoryId/$subcategoryId'
+      preLoaderRoute: typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteImport
+      parentRoute: typeof publicCategoriesCategoryIdRouteRoute
+    }
+    '/(public)/categories/$categoryId/$subcategoryId/$productId': {
+      id: '/(public)/categories/$categoryId/$subcategoryId/$productId'
+      path: '/$productId'
+      fullPath: '/categories/$categoryId/$subcategoryId/$productId'
+      preLoaderRoute: typeof publicCategoriesCategoryIdSubcategoryIdProductIdRouteRouteImport
+      parentRoute: typeof publicCategoriesCategoryIdSubcategoryIdRouteRoute
     }
   }
 }
@@ -156,10 +273,58 @@ const ContactUsRouteWithChildren = ContactUsRoute._addFileChildren(
   ContactUsRouteChildren,
 )
 
+interface publicCategoriesCategoryIdSubcategoryIdRouteRouteChildren {
+  publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute: typeof publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute
+}
+
+const publicCategoriesCategoryIdSubcategoryIdRouteRouteChildren: publicCategoriesCategoryIdSubcategoryIdRouteRouteChildren =
+  {
+    publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute:
+      publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute,
+  }
+
+const publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren =
+  publicCategoriesCategoryIdSubcategoryIdRouteRoute._addFileChildren(
+    publicCategoriesCategoryIdSubcategoryIdRouteRouteChildren,
+  )
+
+interface publicCategoriesCategoryIdRouteRouteChildren {
+  publicCategoriesCategoryIdSubcategoryIdRouteRoute: typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
+}
+
+const publicCategoriesCategoryIdRouteRouteChildren: publicCategoriesCategoryIdRouteRouteChildren =
+  {
+    publicCategoriesCategoryIdSubcategoryIdRouteRoute:
+      publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren,
+  }
+
+const publicCategoriesCategoryIdRouteRouteWithChildren =
+  publicCategoriesCategoryIdRouteRoute._addFileChildren(
+    publicCategoriesCategoryIdRouteRouteChildren,
+  )
+
+interface publicCategoriesRouteRouteChildren {
+  publicCategoriesCategoryIdRouteRoute: typeof publicCategoriesCategoryIdRouteRouteWithChildren
+  publicCategoriesIndexRoute: typeof publicCategoriesIndexRoute
+}
+
+const publicCategoriesRouteRouteChildren: publicCategoriesRouteRouteChildren = {
+  publicCategoriesCategoryIdRouteRoute:
+    publicCategoriesCategoryIdRouteRouteWithChildren,
+  publicCategoriesIndexRoute: publicCategoriesIndexRoute,
+}
+
+const publicCategoriesRouteRouteWithChildren =
+  publicCategoriesRouteRoute._addFileChildren(
+    publicCategoriesRouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactUsRoute: ContactUsRouteWithChildren,
+  publicCategoriesRouteRoute: publicCategoriesRouteRouteWithChildren,
+  publicSearchRouteRoute: publicSearchRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
