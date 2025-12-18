@@ -38,8 +38,16 @@ function RootComponent() {
         <NavLink to="/contact-us">Contact Us</NavLink>
         <NavLink to="/categories">Category</NavLink>
         <NavLink to="/search">Search</NavLink>
+        <NavLink to="/{-$locale}/blog"> Blog</NavLink>
         { isClient && <NavLink to ="/client">Account</NavLink>}
         { isAdmin && <NavLink to ="/admin">Admin</NavLink>}
+        { isAuthenticated ? (
+          <button className='button' onClick={()=>{
+            logout();
+            navigate({ to:'/login' , search: {redirect: location.href }})
+          }}>Sign Out</button>
+        ) : 
+        <NavLink to="/login">Login</NavLink>}
       </div>
       <Outlet />
       <TanStackRouterDevtools />

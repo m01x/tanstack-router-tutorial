@@ -1,5 +1,6 @@
 import type { RouterContext, UserRole } from "@/routes/__root";
 import { useState, useEffect } from "react";
+import { flushSync } from "react-dom";
 
 export function useRouterContextState(): RouterContext {
   const [role, setRole] = useState<UserRole>(() => {
@@ -16,7 +17,10 @@ export function useRouterContextState(): RouterContext {
   }, [role]);
 
   const login = (newRole: "admin" | "client") => {
-    setRole(newRole);
+    flushSync(() => {
+      setRole(newRole);
+    })
+
   };
 
   const logout = () => {
