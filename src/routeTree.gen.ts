@@ -12,15 +12,22 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactUsRouteImport } from './routes/contact-us'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactUsCountryRouteImport } from './routes/contact-us.$country'
+import { Route as AppProjectsRouteRouteImport } from './routes/app/projects/route'
+import { Route as AppDashboardRouteRouteImport } from './routes/app/dashboard/route'
 import { Route as AuthClientRouteRouteImport } from './routes/_auth/client/route'
 import { Route as AuthAdminRouteRouteImport } from './routes/_auth/admin/route'
 import { Route as publicSearchRouteRouteImport } from './routes/(public)/search/route'
 import { Route as publicCategoriesRouteRouteImport } from './routes/(public)/categories/route'
+import { Route as AppDashboardIndexRouteImport } from './routes/app/dashboard/index'
 import { Route as publicCategoriesIndexRouteImport } from './routes/(public)/categories/index'
 import { Route as ContactUsCountryCityRouteImport } from './routes/contact-us.$country.$city'
+import { Route as AppProjectsListRouteImport } from './routes/app/projects/list'
+import { Route as AppDashboardUsersRouteImport } from './routes/app/dashboard/users'
+import { Route as AppDashboardSettingsRouteImport } from './routes/app/dashboard/settings'
 import { Route as AuthAdminReportsRouteImport } from './routes/_auth/admin/reports'
 import { Route as AuthChar123LocaleChar125BlogRouteRouteImport } from './routes/_auth/{-$locale}/blog/route'
 import { Route as AuthAdminCategoriesRouteRouteImport } from './routes/_auth/admin/categories/route'
@@ -48,6 +55,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
@@ -61,6 +73,16 @@ const ContactUsCountryRoute = ContactUsCountryRouteImport.update({
   id: '/$country',
   path: '/$country',
   getParentRoute: () => ContactUsRoute,
+} as any)
+const AppProjectsRouteRoute = AppProjectsRouteRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppDashboardRouteRoute = AppDashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AuthClientRouteRoute = AuthClientRouteRouteImport.update({
   id: '/client',
@@ -82,6 +104,11 @@ const publicCategoriesRouteRoute = publicCategoriesRouteRouteImport.update({
   path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppDashboardIndexRoute = AppDashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppDashboardRouteRoute,
+} as any)
 const publicCategoriesIndexRoute = publicCategoriesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -91,6 +118,21 @@ const ContactUsCountryCityRoute = ContactUsCountryCityRouteImport.update({
   id: '/$city',
   path: '/$city',
   getParentRoute: () => ContactUsCountryRoute,
+} as any)
+const AppProjectsListRoute = AppProjectsListRouteImport.update({
+  id: '/list',
+  path: '/list',
+  getParentRoute: () => AppProjectsRouteRoute,
+} as any)
+const AppDashboardUsersRoute = AppDashboardUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AppDashboardRouteRoute,
+} as any)
+const AppDashboardSettingsRoute = AppDashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppDashboardRouteRoute,
 } as any)
 const AuthAdminReportsRoute = AuthAdminReportsRouteImport.update({
   id: '/reports',
@@ -160,6 +202,7 @@ const publicCategoriesCategoryIdSubcategoryIdProductIdRouteRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
   '/login': typeof LoginRoute
@@ -167,13 +210,19 @@ export interface FileRoutesByFullPath {
   '/search': typeof publicSearchRouteRoute
   '/admin': typeof AuthAdminRouteRouteWithChildren
   '/client': typeof AuthClientRouteRouteWithChildren
+  '/app/dashboard': typeof AppDashboardRouteRouteWithChildren
+  '/app/projects': typeof AppProjectsRouteRouteWithChildren
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
   '/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/admin/categories': typeof AuthAdminCategoriesRouteRouteWithChildren
   '/{-$locale}/blog': typeof AuthChar123LocaleChar125BlogRouteRouteWithChildren
   '/admin/reports': typeof AuthAdminReportsRoute
+  '/app/dashboard/settings': typeof AppDashboardSettingsRoute
+  '/app/dashboard/users': typeof AppDashboardUsersRoute
+  '/app/projects/list': typeof AppProjectsListRoute
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
   '/categories/': typeof publicCategoriesIndexRoute
+  '/app/dashboard/': typeof AppDashboardIndexRoute
   '/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
   '/{-$locale}/blog/$topicId': typeof AuthChar123LocaleChar125BlogTopicIdRouteRouteWithChildren
   '/admin/categories/create': typeof AuthAdminCategoriesCreateRoute
@@ -184,19 +233,25 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
   '/login': typeof LoginRoute
   '/search': typeof publicSearchRouteRoute
   '/admin': typeof AuthAdminRouteRouteWithChildren
   '/client': typeof AuthClientRouteRouteWithChildren
+  '/app/projects': typeof AppProjectsRouteRouteWithChildren
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
   '/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/admin/categories': typeof AuthAdminCategoriesRouteRouteWithChildren
   '/{-$locale}/blog': typeof AuthChar123LocaleChar125BlogRouteRouteWithChildren
   '/admin/reports': typeof AuthAdminReportsRoute
+  '/app/dashboard/settings': typeof AppDashboardSettingsRoute
+  '/app/dashboard/users': typeof AppDashboardUsersRoute
+  '/app/projects/list': typeof AppProjectsListRoute
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
   '/categories': typeof publicCategoriesIndexRoute
+  '/app/dashboard': typeof AppDashboardIndexRoute
   '/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
   '/{-$locale}/blog/$topicId': typeof AuthChar123LocaleChar125BlogTopicIdRouteRouteWithChildren
   '/admin/categories/create': typeof AuthAdminCategoriesCreateRoute
@@ -209,6 +264,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
+  '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/contact-us': typeof ContactUsRouteWithChildren
   '/login': typeof LoginRoute
@@ -216,13 +272,19 @@ export interface FileRoutesById {
   '/(public)/search': typeof publicSearchRouteRoute
   '/_auth/admin': typeof AuthAdminRouteRouteWithChildren
   '/_auth/client': typeof AuthClientRouteRouteWithChildren
+  '/app/dashboard': typeof AppDashboardRouteRouteWithChildren
+  '/app/projects': typeof AppProjectsRouteRouteWithChildren
   '/contact-us/$country': typeof ContactUsCountryRouteWithChildren
   '/(public)/categories/$categoryId': typeof publicCategoriesCategoryIdRouteRouteWithChildren
   '/_auth/admin/categories': typeof AuthAdminCategoriesRouteRouteWithChildren
   '/_auth/{-$locale}/blog': typeof AuthChar123LocaleChar125BlogRouteRouteWithChildren
   '/_auth/admin/reports': typeof AuthAdminReportsRoute
+  '/app/dashboard/settings': typeof AppDashboardSettingsRoute
+  '/app/dashboard/users': typeof AppDashboardUsersRoute
+  '/app/projects/list': typeof AppProjectsListRoute
   '/contact-us/$country/$city': typeof ContactUsCountryCityRoute
   '/(public)/categories/': typeof publicCategoriesIndexRoute
+  '/app/dashboard/': typeof AppDashboardIndexRoute
   '/(public)/categories/$categoryId/$subcategoryId': typeof publicCategoriesCategoryIdSubcategoryIdRouteRouteWithChildren
   '/_auth/{-$locale}/blog/$topicId': typeof AuthChar123LocaleChar125BlogTopicIdRouteRouteWithChildren
   '/_auth/admin/categories_/create': typeof AuthAdminCategoriesCreateRoute
@@ -235,6 +297,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/about'
     | '/contact-us'
     | '/login'
@@ -242,13 +305,19 @@ export interface FileRouteTypes {
     | '/search'
     | '/admin'
     | '/client'
+    | '/app/dashboard'
+    | '/app/projects'
     | '/contact-us/$country'
     | '/categories/$categoryId'
     | '/admin/categories'
     | '/{-$locale}/blog'
     | '/admin/reports'
+    | '/app/dashboard/settings'
+    | '/app/dashboard/users'
+    | '/app/projects/list'
     | '/contact-us/$country/$city'
     | '/categories/'
+    | '/app/dashboard/'
     | '/categories/$categoryId/$subcategoryId'
     | '/{-$locale}/blog/$topicId'
     | '/admin/categories/create'
@@ -259,19 +328,25 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app'
     | '/about'
     | '/contact-us'
     | '/login'
     | '/search'
     | '/admin'
     | '/client'
+    | '/app/projects'
     | '/contact-us/$country'
     | '/categories/$categoryId'
     | '/admin/categories'
     | '/{-$locale}/blog'
     | '/admin/reports'
+    | '/app/dashboard/settings'
+    | '/app/dashboard/users'
+    | '/app/projects/list'
     | '/contact-us/$country/$city'
     | '/categories'
+    | '/app/dashboard'
     | '/categories/$categoryId/$subcategoryId'
     | '/{-$locale}/blog/$topicId'
     | '/admin/categories/create'
@@ -283,6 +358,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/app'
     | '/about'
     | '/contact-us'
     | '/login'
@@ -290,13 +366,19 @@ export interface FileRouteTypes {
     | '/(public)/search'
     | '/_auth/admin'
     | '/_auth/client'
+    | '/app/dashboard'
+    | '/app/projects'
     | '/contact-us/$country'
     | '/(public)/categories/$categoryId'
     | '/_auth/admin/categories'
     | '/_auth/{-$locale}/blog'
     | '/_auth/admin/reports'
+    | '/app/dashboard/settings'
+    | '/app/dashboard/users'
+    | '/app/projects/list'
     | '/contact-us/$country/$city'
     | '/(public)/categories/'
+    | '/app/dashboard/'
     | '/(public)/categories/$categoryId/$subcategoryId'
     | '/_auth/{-$locale}/blog/$topicId'
     | '/_auth/admin/categories_/create'
@@ -309,6 +391,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactUsRoute: typeof ContactUsRouteWithChildren
   LoginRoute: typeof LoginRoute
@@ -339,6 +422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth': {
       id: '/_auth'
       path: ''
@@ -359,6 +449,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/contact-us/$country'
       preLoaderRoute: typeof ContactUsCountryRouteImport
       parentRoute: typeof ContactUsRoute
+    }
+    '/app/projects': {
+      id: '/app/projects'
+      path: '/projects'
+      fullPath: '/app/projects'
+      preLoaderRoute: typeof AppProjectsRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_auth/client': {
       id: '/_auth/client'
@@ -388,6 +492,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicCategoriesRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/dashboard/': {
+      id: '/app/dashboard/'
+      path: '/'
+      fullPath: '/app/dashboard/'
+      preLoaderRoute: typeof AppDashboardIndexRouteImport
+      parentRoute: typeof AppDashboardRouteRoute
+    }
     '/(public)/categories/': {
       id: '/(public)/categories/'
       path: '/'
@@ -401,6 +512,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/contact-us/$country/$city'
       preLoaderRoute: typeof ContactUsCountryCityRouteImport
       parentRoute: typeof ContactUsCountryRoute
+    }
+    '/app/projects/list': {
+      id: '/app/projects/list'
+      path: '/list'
+      fullPath: '/app/projects/list'
+      preLoaderRoute: typeof AppProjectsListRouteImport
+      parentRoute: typeof AppProjectsRouteRoute
+    }
+    '/app/dashboard/users': {
+      id: '/app/dashboard/users'
+      path: '/users'
+      fullPath: '/app/dashboard/users'
+      preLoaderRoute: typeof AppDashboardUsersRouteImport
+      parentRoute: typeof AppDashboardRouteRoute
+    }
+    '/app/dashboard/settings': {
+      id: '/app/dashboard/settings'
+      path: '/settings'
+      fullPath: '/app/dashboard/settings'
+      preLoaderRoute: typeof AppDashboardSettingsRouteImport
+      parentRoute: typeof AppDashboardRouteRoute
     }
     '/_auth/admin/reports': {
       id: '/_auth/admin/reports'
@@ -572,6 +704,46 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface AppDashboardRouteRouteChildren {
+  AppDashboardSettingsRoute: typeof AppDashboardSettingsRoute
+  AppDashboardUsersRoute: typeof AppDashboardUsersRoute
+  AppDashboardIndexRoute: typeof AppDashboardIndexRoute
+}
+
+const AppDashboardRouteRouteChildren: AppDashboardRouteRouteChildren = {
+  AppDashboardSettingsRoute: AppDashboardSettingsRoute,
+  AppDashboardUsersRoute: AppDashboardUsersRoute,
+  AppDashboardIndexRoute: AppDashboardIndexRoute,
+}
+
+const AppDashboardRouteRouteWithChildren =
+  AppDashboardRouteRoute._addFileChildren(AppDashboardRouteRouteChildren)
+
+interface AppProjectsRouteRouteChildren {
+  AppProjectsListRoute: typeof AppProjectsListRoute
+}
+
+const AppProjectsRouteRouteChildren: AppProjectsRouteRouteChildren = {
+  AppProjectsListRoute: AppProjectsListRoute,
+}
+
+const AppProjectsRouteRouteWithChildren =
+  AppProjectsRouteRoute._addFileChildren(AppProjectsRouteRouteChildren)
+
+interface AppRouteRouteChildren {
+  AppDashboardRouteRoute: typeof AppDashboardRouteRouteWithChildren
+  AppProjectsRouteRoute: typeof AppProjectsRouteRouteWithChildren
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppDashboardRouteRoute: AppDashboardRouteRouteWithChildren,
+  AppProjectsRouteRoute: AppProjectsRouteRouteWithChildren,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 interface ContactUsCountryRouteChildren {
   ContactUsCountryCityRoute: typeof ContactUsCountryCityRoute
 }
@@ -644,6 +816,7 @@ const publicCategoriesRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  AppRouteRoute: AppRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactUsRoute: ContactUsRouteWithChildren,
   LoginRoute: LoginRoute,

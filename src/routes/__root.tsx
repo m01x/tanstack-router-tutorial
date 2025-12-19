@@ -48,6 +48,8 @@ function RootComponent() {
           }}>Sign Out</button>
         ) : 
         <NavLink to="/login">Login</NavLink>}
+        <NavLink to="/app/dashboard"> Dashboard</NavLink>
+        <NavLink to="/app/projects"> Projects</NavLink>
       </div>
       <Outlet />
       <TanStackRouterDevtools />
